@@ -1,0 +1,352 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 33% 89%;
+    --foreground: 20 60% 5%;
+    --card: 48 50% 96%;
+    --card-foreground: 20 60% 5%;
+    --popover: 48 50% 96%;
+    --popover-foreground: 20 60% 5%;
+    --primary: 20 60% 5%;
+    --primary-foreground: 48 50% 96%;
+    --secondary: 34 14% 52%;
+    --secondary-foreground: 20 60% 5%;
+    --muted: 45 33% 89%;
+    --muted-foreground: 0 0% 41%;
+    --accent: 45 33% 89%;
+    --accent-foreground: 20 60% 5%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 20 60% 5% / 0.1;
+    --input: 20 60% 5% / 0.1;
+    --ring: 34 14% 52%;
+    --radius: 0.125rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  body {
+    @apply bg-parchment text-charcoal;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-wrap: break-word;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+/* 锚点目标为固定导航栏预留偏移（兜底：非 Lenis 滚动时标题不被遮挡） */
+section[id] {
+  scroll-margin-top: 88px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer components {
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(6px) saturate(140%);
+    -webkit-backdrop-filter: blur(6px) saturate(140%);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.5) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.25;
+  }
+
+  .liquid-glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(ellipse 90% 40% at 50% 0%, rgba(255,255,255,0.18) 0%, transparent 55%), radial-gradient(ellipse 60% 35% at 65% 10%, rgba(255,255,255,0.08) 0%, transparent 50%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+}
+
+/* ---------- Leaflet 地图定制 ---------- */
+.leaflet-container {
+  font-family: 'Noto Serif SC', 'Songti SC', serif;
+  background: #241608;
+}
+
+/* 古风底图：泛旧渲染 */
+.ancient-tiles {
+  filter: sepia(0.62) saturate(0.55) hue-rotate(-8deg) brightness(0.92) contrast(0.9);
+}
+
+.leaflet-control-zoom {
+  border: 1px solid rgba(147, 137, 119, 0.35) !important;
+  border-radius: 4px !important;
+  overflow: hidden;
+}
+.leaflet-control-zoom a {
+  background: rgba(24, 12, 4, 0.85) !important;
+  color: #e8c877 !important;
+  border-bottom: 1px solid rgba(147, 137, 119, 0.25) !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+.leaflet-control-zoom a:hover {
+  background: rgba(212, 162, 78, 0.25) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(24, 12, 4, 0.65) !important;
+  color: rgba(147, 137, 119, 0.8) !important;
+  font-size: 10px !important;
+  font-family: Inter, system-ui, sans-serif !important;
+}
+.leaflet-control-attribution a {
+  color: rgba(212, 162, 78, 0.85) !important;
+}
+
+/* 河流标注 */
+.river-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #5f7d88 !important;
+  font-size: 14px !important;
+  letter-spacing: 6px !important;
+  font-family: 'Noto Serif SC', 'Songti SC', serif !important;
+  text-shadow: 0 0 6px rgba(24, 12, 4, 0.8);
+}
+.river-label::before {
+  display: none !important;
+}
+
+/* 节点标注 */
+.node-label {
+  background: rgba(24, 12, 4, 0.78) !important;
+  border: 1px solid rgba(147, 137, 119, 0.3) !important;
+  border-radius: 3px !important;
+  color: #e6e0cd !important;
+  font-size: 12px !important;
+  padding: 2px 8px !important;
+  font-family: 'Noto Serif SC', 'Songti SC', serif !important;
+  box-shadow: none !important;
+}
+.node-label::before {
+  display: none !important;
+}
+.node-label-meiguan {
+  border-color: rgba(212, 162, 78, 0.7) !important;
+  color: #e8c877 !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px;
+}
+
+
+/* ===== 诗路行者 · 交互动效令牌（shilu-interactions） ===== */
+:root {
+  --shilu-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shilu-dur: 0.28s;
+}
+/* 可点击卡片通用：悬停浮起 + 按压回弹 */
+.shilu-pressable {
+  transition: transform var(--shilu-dur) var(--shilu-ease),
+    box-shadow var(--shilu-dur) var(--shilu-ease),
+    border-color var(--shilu-dur) var(--shilu-ease);
+}
+.shilu-pressable:hover {
+  transform: translateY(-2px);
+}
+.shilu-pressable:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.08s;
+}
+/* 按钮按压反馈 */
+button { -webkit-tap-highlight-color: transparent; }
+.shilu-btn:active { transform: scale(0.96); }
+/* 骨架屏扫光 */
+@keyframes shilu-shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+.shilu-skeleton {
+  background: linear-gradient(90deg, #ece2c8 25%, #f6efdd 50%, #ece2c8 75%);
+  background-size: 400px 100%;
+  animation: shilu-shimmer 1.4s ease-in-out infinite;
+  border-radius: 12px;
+}
+/* 瓦片淡入 */
+.leaflet-tile { transition: opacity 0.35s ease; }
+.leaflet-tile-loaded { opacity: 1; }
+/* 弹窗/卡片进入 */
+@keyframes shilu-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.shilu-rise { animation: shilu-rise 0.35s var(--shilu-ease) both; }
+
+
+/* ===== 长卷主站（scroll）自定义样式追加 ===== */
+@layer base {
+  :root {
+    --paper: #F0E7D3;
+    --paper-deep: #E6D9BE;
+    --ink: #2A1E14;
+    --ink-soft: #5B4632;
+    --umber: #3E2C1D;
+    --umber-deep: #241810;
+    --cinnabar: #A83A2A;
+    --cinnabar-deep: #7E2A1E;
+    --ochre: #A9803E;
+    --gold-leaf: #C9A35B;
+    --plum: #C98D92;
+    --mist: #8A8577;
+    --paper-on-dark: #EFE4CB;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  body {
+    @apply bg-paper text-ink font-serif antialiased;
+    letter-spacing: 0.05em;
+  }
+  ::selection {
+    background: rgba(168, 58, 42, 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* PoemModal 遮罩：深褐半透明 + 4px 模糊（design.md §8.4） */
+  [data-slot="dialog-overlay"] {
+    background: rgba(36, 24, 16, 0.72);
+    backdrop-filter: blur(4px);
+  }
+}
+
+@layer utilities {
+  /* 宣纸纹理叠加（浅色区 multiply / 深色区 overlay 由使用处自行指定混合模式） */
+  .paper-grain {
+    background-image: url("/paper-texture.png");
+    background-size: 480px 480px;
+  }
+  .paper-grain-overlay {
+    position: relative;
+  }
+  .paper-grain-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/paper-texture.png");
+    background-size: 480px 480px;
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .paper-grain-overlay-dark {
+    position: relative;
+  }
+  .paper-grain-overlay-dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/paper-texture.png");
+    background-size: 480px 480px;
+    mix-blend-mode: overlay;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* 竖排文本 */
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+  .writing-vertical-mixed {
+    writing-mode: vertical-rl;
+  }
+
+  /* 界栏线分隔：1px 墨线 + 中央鱼尾符 */
+  .divider-rail {
+    position: relative;
+    height: 1px;
+    background: rgba(42, 30, 20, 0.15);
+  }
+  .divider-rail::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 34px;
+    height: 26px;
+    transform: translate(-50%, -50%);
+    background-image: url("/divider-fishtail.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* 自定义墨点光标启用时隐藏原生光标 */
+  .ink-cursor-active, .ink-cursor-active a, .ink-cursor-active button {
+    cursor: none;
+  }
+}
