@@ -1,0 +1,6 @@
+2026-08-11 01:11:50 | verifier/v1/check.sh(optimize-check部分) | exit=0 | 7/7通过; tiles=7225(z11新增3138)
+2026-08-11 08:02:11 | optimize-check post-merge(feat-guide+feat-beauty) | exit=0 | 7/7; 主包492KB(-47%)
+2026-08-11 08:20 | 收官 | master=f52c6e8 工作树干净 | 第18轮为最终交付；r19/r20 候选已存档至 OPTIMIZATION.md
+2026-08-11 09:05 | optimize-check 第19轮 | exit=0 | 7/7; 主包424KB(-14%)；移除InkCursor/Lenis/情感曲线，新增岭南影像占位
+2026-08-11 10:20 | verifier/v2/check.sh | exit=0 | 16/16; 高德40MB+古地图48MB；/learn研学+AI补录+深链 全PASS
+2026-08-11 12:05 | verifier/v3/check.sh | exit=0 | 18/18; 分片重构+回源自愈；古地图144MB/现代47MB；低层重下12954片
